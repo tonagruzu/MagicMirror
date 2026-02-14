@@ -62,13 +62,16 @@ Temporary Items
 # Ignore changes to the custom css files but keep the sample and main.
 /css/*
 !/css/custom.css.sample
+!/css/custom.css
 !/css/font-awesome.css
 !/css/main.css
 !/css/roboto.css
 
-# Ignore users config file but keep the sample.
-config
+# Track personal config files in fork
+config/*.log
+config/*.pid
 !config/config.js.sample
+!config/config.js
 
 # Vim
 ## swap
