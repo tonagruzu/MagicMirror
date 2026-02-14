@@ -1,5 +1,8 @@
 /* Config Sample
  *
+ * IMPORTANT: Sensitive data (coordinates, API keys, tokens) have been masked with asterisks.
+ * Replace masked values (**.******) with your actual values before use.
+ *
  * For more information on how you can configure this file
  * see https://docs.magicmirror.builders/configuration/introduction.html
  * and https://docs.magicmirror.builders/modules/configuration.html
@@ -73,8 +76,8 @@ let config = {
 			config: {
 				weatherProvider: "openmeteo",
 				type: "current",
-				lat: 40.776676,
-				lon: -73.971321
+				lat: **.******,
+				lon: -**.******
 			}
 		},
 		{
@@ -84,8 +87,8 @@ let config = {
 			config: {
 				weatherProvider: "openmeteo",
 				type: "forecast",
-				lat: 40.776676,
-				lon: -73.971321
+				lat: **.******,
+				lon: -**.******
 			}
 		},
 		{
