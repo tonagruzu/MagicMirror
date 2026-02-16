@@ -27,6 +27,7 @@ module.exports = NodeHelper.create({
 		const chatId = config.chatId || "";
 		const updateInterval = config.updateInterval || 60 * 1000;
 		const maxMessages = config.maxMessages || 5;
+		const messageMaxAgeHours = Number(config.messageMaxAgeHours) > 0 ? Number(config.messageMaxAgeHours) : 4;
 
 		// Validate configuration
 		if (!botToken || !chatId) {
@@ -40,7 +41,7 @@ module.exports = NodeHelper.create({
 		let fetcher;
 		if (typeof this.fetchers[identifier] === "undefined") {
 			Log.log(`Create new Telegram fetcher for chat: ${chatId} - Interval: ${updateInterval}`);
-			fetcher = new TelegramFetcher(botToken, chatId, updateInterval, maxMessages);
+			fetcher = new TelegramFetcher(botToken, chatId, updateInterval, maxMessages, messageMaxAgeHours);
 
 			fetcher.onReceive(() => {
 				this.broadcastMessages(identifier);

@@ -11,6 +11,7 @@ Module.register("MMM-Telegram", {
 		timeFormat: "relative", // "relative" or "absolute"
 		fadeMessages: true, // Apply fade effect to older messages
 		fadePoint: 0.6, // Start fading from this point (0-1)
+		messageMaxAgeHours: 4, // Remove messages older than this many hours
 		hideLoading: false,
 		lengthDescription: 200, // Maximum message length to display
 		truncateMessage: true // Truncate long messages

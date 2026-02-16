@@ -11,6 +11,7 @@ A MagicMirror² module to display your latest Telegram messages on your smart mi
 - Relative or absolute time display
 - Message truncation for long messages
 - Fade effect for older messages
+- Automatic message aging (configurable, default 4 hours)
 
 ## Installation
 
@@ -79,6 +80,7 @@ Add the module to your `config/config.js` file:
 | `timeFormat` | String | `"relative"` | Time format: "relative" (e.g., "5 minutes ago") or "absolute" (e.g., "14:30") |
 | `fadeMessages` | Boolean | `true` | Apply fade effect to older messages |
 | `fadePoint` | Number | `0.6` | Start fading from this point (0-1, where 0.6 = 60% of messages) |
+| `messageMaxAgeHours` | Number | `4` | Remove messages older than this many hours |
 | `hideLoading` | Boolean | `false` | Hide module until first messages are loaded |
 | `lengthDescription` | Number | `200` | Maximum message length to display |
 | `truncateMessage` | Boolean | `true` | Truncate long messages |
@@ -137,6 +139,7 @@ To test the module:
 3. New messages are filtered by your `chatId`
 4. Messages are displayed in the MagicMirror UI
 5. The module tracks the last update ID to avoid showing duplicate messages
+6. Messages older than `messageMaxAgeHours` are automatically aged out (default: 4 hours)
 
 ## Future Enhancements
 

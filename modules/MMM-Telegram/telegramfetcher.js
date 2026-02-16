@@ -8,9 +8,12 @@ const { scheduleTimer } = require("#module_functions");
  * @param {string} chatId Chat ID or user ID to fetch messages from
  * @param {number} updateInterval Update interval in milliseconds
  * @param {number} maxMessages Maximum number of messages to fetch
+ * @param {number} messageMaxAgeHours Maximum age of messages in hours
  * @class
  */
-const TelegramFetcher = function (botToken, chatId, updateInterval, maxMessages) {
+const TelegramFetcher = function (botToken, chatId, updateInterval, maxMessages, messageMaxAgeHours) {
+	const maxAgeHours = Number(messageMaxAgeHours) > 0 ? Number(messageMaxAgeHours) : 4;
+	const messageMaxAgeMS = maxAgeHours * 60 * 60 * 1000;
 	let updateTimer = null;
 	let messages = [];
 	let updateIntervalMS = updateInterval;
@@ -31,6 +34,9 @@ const TelegramFetcher = function (botToken, chatId, updateInterval, maxMessages)
 	const fetchMessages = async () => {
 		clearTimeout(updateTimer);
 		updateTimer = null;
+
+		const now = Date.now();
+		messages = messages.filter((message) => now - message.date <= messageMaxAgeMS);
 
 		try {
 			// Telegram Bot API endpoint for getting updates
@@ -71,7 +77,9 @@ const TelegramFetcher = function (botToken, chatId, updateInterval, maxMessages)
 
 				// Add new messages to the beginning of the array
 				if (newMessages.length > 0) {
-					messages = [...newMessages, ...messages].slice(0, maxMessages);
+					messages = [...newMessages, ...messages]
+						.filter((message) => now - message.date <= messageMaxAgeMS)
+						.slice(0, maxMessages);
 					Log.info(`Fetched ${newMessages.length} new Telegram message(s)`);
 				}
 			}
@@ -109,6 +117,9 @@ const TelegramFetcher = function (botToken, chatId, updateInterval, maxMessages)
 	 * Broadcast the existing messages.
 	 */
 	this.broadcastMessages = function () {
+		const now = Date.now();
+		messages = messages.filter((message) => now - message.date <= messageMaxAgeMS);
+
 		if (messages.length <= 0) {
 			Log.info("No Telegram messages to broadcast yet.");
 			// Still call the callback to inform the frontend
