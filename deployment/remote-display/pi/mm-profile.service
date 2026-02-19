@@ -1,0 +1,16 @@
+[Unit]
+Description=MagicMirror profile launcher (stable-a / pilot-b)
+After=network-online.target graphical.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/opt/mm/current
+EnvironmentFile=-/etc/default/mm-profile
+ExecStart=/usr/local/bin/switch-mm-profile.sh start
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=graphical.target
